@@ -16,4 +16,10 @@ router.post("/onboarding", protectRoute, onboard);
 router.get('/protected', protectRoute, (req, res) => {
     res.status(200).json({ message: "You have accessed a protected route", user: req.user });
 });
+
+// check if user is logged in
+router.get("/me", protectRoute, (req, res) => {
+  res.status(200).json({ success: true, user: req.user });
+});
+
 export default router;
