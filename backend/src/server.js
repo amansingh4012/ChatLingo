@@ -19,12 +19,12 @@ dotenv.config();
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
-app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-        ? true  // Allow same origin in production (fullstack deployment)
-        : "http://localhost:5173",
-    credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true, // allow frontend to send cookies
+  })
+);
 
 
 app.use(express.json());
@@ -36,11 +36,12 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/global-chat', globalChatRoutes);
 app.use('/api/language-chat', languageChatRoutes);
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, '../frontend/dist')));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-    });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
 }
 
 
