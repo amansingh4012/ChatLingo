@@ -60,7 +60,10 @@ const LanguageChatPage = () => {
   // Socket.io setup for language-specific chat
   useEffect(() => {
     if (authUser && userLanguage) {
-      const newSocket = io("http://localhost:5001", {
+      // For fullstack deployment, connect to same origin (no separate backend URL needed)
+      const socketURL = import.meta.env.DEV ? "http://localhost:5001" : window.location.origin;
+      
+      const newSocket = io(socketURL, {
         query: { userId: authUser._id },
       });
 

@@ -4,27 +4,63 @@ ChatLingo is a modern, real-time language exchange platform that connects langua
 
 ## 🚀 Features
 
-### Core Features
+### Communication Features
+- **Real-time Messaging**: Instant chat powered by Stream Chat SDK and Socket.io
+- **Video Calling**: High-quality video calls using Stream Video SDK
+- **Global Chat Room**: Community-wide chat for all users to connect
+- **Language-Specific Chat Rooms**: Dedicated chat rooms for each learning language
+- **Live Message Updates**: Real-time message synchronization without page refresh
+- **Typing Indicators**: See when other users are typing in real-time
+- **Message Management**: Delete your own messages with instant sync across all users
+
+### User Features
 - **User Authentication**: Secure signup/login with JWT tokens
 - **User Onboarding**: Comprehensive profile setup with language preferences
 - **Smart Friend Recommendations**: AI-powered matching based on language learning goals
-- **Real-time Messaging**: Instant chat powered by Stream Chat SDK
-- **Video Calling**: High-quality video calls using Stream Video SDK
 - **Friend Request System**: Send, receive, and manage friend requests
 - **Multi-language Support**: Support for various native and learning languages
-- **Responsive Design**: Mobile-first design with Tailwind CSS and DaisyUI
+- **Responsive Design**: Mobile-first design with sliding sidebar navigation
 
 ### Technical Features
-- **Real-time Communication**: WebSocket-based messaging and notifications
+- **Socket.io Integration**: Real-time bidirectional communication
 - **Secure Authentication**: JWT-based auth with HTTP-only cookies
-- **MongoDB Integration**: Robust data persistence with Mongoose ODM
+- **MongoDB Integration**: Robust data persistence with separate chat collections
 - **Stream.io Integration**: Professional-grade chat and video infrastructure
 - **Theme Support**: Dark/light mode with persistent preferences
 - **Progressive Web App**: Optimized for mobile and desktop experiences
 
-## 🛠️ Tech Stack
+## � Real-Time Messaging Features
+
+### Socket.io Integration
+ChatLingo now features advanced real-time messaging capabilities powered by Socket.io:
+
+#### **Global Chat Room** (`/global-chat`)
+- Community-wide chat for all users regardless of learning language
+- Real-time message synchronization across all connected users
+- Instant message delivery without page refresh
+- Live typing indicators showing who's currently typing
+- Message deletion with real-time sync across all users
+- Auto-scroll to latest messages
+
+#### **Language-Specific Chat Rooms** (`/general-chat`)
+- Dedicated chat rooms for each learning language (e.g., "Spanish Chat Room", "French Chat Room")
+- Only users learning the same language can see and participate in each room
+- Language validation - users must set their learning language to access
+- Separate Socket.io rooms for isolation (e.g., "spanish-chat", "french-chat")
+- Real-time messaging within language groups
+- Dynamic room names based on user's learning language
+
+#### **Technical Implementation**
+- **Frontend**: Socket.io client connects to backend server
+- **Backend**: Socket.io server manages room-based messaging
+- **Database**: Separate MongoDB collections for global and language-specific messages
+- **Security**: Server-side language validation and user authentication
+- **Performance**: Efficient room-based message broadcasting
+
+## �🛠️ Tech Stack
 
 ### Frontend
+
 - **React 19** - Modern React with latest features
 - **Vite** - Fast build tool and development server
 - **React Router** - Client-side routing
@@ -32,6 +68,7 @@ ChatLingo is a modern, real-time language exchange platform that connects langua
 - **DaisyUI** - Beautiful UI components for Tailwind
 - **React Query (TanStack Query)** - Server state management
 - **Zustand** - Lightweight state management
+- **Socket.io Client** - Real-time bidirectional communication
 - **Axios** - HTTP client for API requests
 - **Stream Chat React** - Chat UI components
 - **Stream Video React SDK** - Video calling components
@@ -39,9 +76,11 @@ ChatLingo is a modern, real-time language exchange platform that connects langua
 - **Lucide React** - Modern icon library
 
 ### Backend
+
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web application framework
-- **MongoDB** - NoSQL database
+- **Socket.io** - Real-time WebSocket communication server
+- **MongoDB** - NoSQL database with separate collections for different chat types
 - **Mongoose** - MongoDB object modeling
 - **JWT** - JSON Web Tokens for authentication
 - **bcryptjs** - Password hashing
@@ -156,8 +195,11 @@ npm start
 
 ### Key Pages
 - **HomePage** (`/`) - Friends list and user recommendations
-- **ChatPage** (`/chat/:id`) - Real-time messaging interface
+- **ChatPage** (`/chat/:id`) - Real-time messaging interface with friends
+- **GlobalChatPage** (`/global-chat`) - Community-wide chat room for all users
+- **LanguageChatPage** (`/general-chat`) - Language-specific chat rooms (e.g., Spanish Chat Room)
 - **CallPage** (`/call/:id`) - Video calling interface
+- **FriendsPage** (`/friends`) - Dedicated friends management page
 - **NotificationsPage** (`/notifications`) - Friend request management
 - **OnboardingPage** (`/onboarding`) - Initial profile setup
 - **LoginPage** (`/login`) - User authentication
@@ -186,6 +228,20 @@ PUT /friend-request/:id  # Accept friend request
 ### Chat Routes (`/api/chat`)
 ```
 GET /token          # Get Stream chat token
+```
+
+### Global Chat Routes (`/api/global-chat`)
+```
+GET /messages       # Get global chat messages
+POST /messages      # Send global chat message
+DELETE /messages/:id # Delete own global chat message
+```
+
+### Language Chat Routes (`/api/language-chat`)
+```
+GET /messages       # Get language-specific chat messages
+POST /messages      # Send language-specific chat message
+DELETE /messages/:id # Delete own language-specific message
 ```
 
 ## 🏗️ Project Structure
@@ -228,21 +284,26 @@ ChatLingo/
 ## 🌟 Key Components
 
 ### Frontend Components
-- **Layout** - Main application layout with sidebar
-- **Navbar** - Navigation with user menu and theme selector
-- **Sidebar** - Friends list and navigation
+- **Layout** - Main application layout with sliding sidebar navigation
+- **Navbar** - Navigation with hamburger menu and theme selector
+- **Sidebar** - Sliding navigation with dynamic language chat room names
+- **GlobalChatPage** - Community-wide real-time chat interface
+- **LanguageChatPage** - Language-specific real-time chat rooms
 - **FriendCard** - User card component with language badges
 - **CallButton** - Initiates video calls
 - **ChatLoader** - Loading states for chat
 - **ThemeSelector** - Dark/light mode toggle
 
 ### Backend Models
-- **User Model** - User schema with authentication methods
+- **User Model** - User schema with authentication methods and language preferences
 - **FriendRequest Model** - Friend request management
+- **GlobalChat Model** - Global chat message storage with soft deletion
+- **LanguageChat Model** - Language-specific chat messages with language filtering
 
 ### Custom Hooks
 - **useAuthUser** - Authentication state management
 - **useLogin/useSignUp/useLogout** - Authentication operations
+- **useSidebarStore** - Zustand store for sidebar state management
 
 ## 🎨 UI/UX Features
 

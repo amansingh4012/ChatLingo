@@ -20,8 +20,10 @@ const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
 app.use(cors({
-    origin : "http://localhost:5173",
-    credentials : true,
+    origin: process.env.NODE_ENV === 'production' 
+        ? true  // Allow same origin in production (fullstack deployment)
+        : "http://localhost:5173",
+    credentials: true,
 }));
 
 
