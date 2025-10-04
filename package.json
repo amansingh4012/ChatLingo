@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
-   "start": "npm run start --prefix backend",
-   "install-deps": "npm install --prefix backend socket.io && npm install --prefix frontend socket.io-client"
+   "start": "npm run start --prefix backend"
   },
   "repository": {
     "type": "git",
