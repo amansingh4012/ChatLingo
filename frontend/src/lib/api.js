@@ -63,3 +63,6 @@ export async function getStreamToken() {
   const response = await axiosInstance.get("/chat/token");
   return response.data;
 }
+
+// Default export for direct axios usage
+export default axiosInstance;
