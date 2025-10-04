@@ -22,7 +22,7 @@ const __dirname = path.resolve();
 app.use(
   cors({
     origin: process.env.NODE_ENV === "production" 
-      ? process.env.FRONTEND_URL || "https://your-app-name.onrender.com"
+      ? "http://localhost:5173"
       : "http://localhost:5173",
     credentials: true, // allow frontend to send cookies
   })
